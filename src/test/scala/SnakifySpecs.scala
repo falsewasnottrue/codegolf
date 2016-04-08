@@ -5,25 +5,7 @@ import org.scalatest.{FlatSpec, Matchers}
   */
 
 /**
-*Hel
-  *l      rin
-  *o,IAmASt g
-           *S
-       *!ekan
- **
- *Hello,IAmAStringSnake!
- **
- *----------
 
- **
- *P  ngPu  Code
-*r  i  z  d  G
-*o  m  z  n  o
-*gram  lesA  lf
- **
- *ProgrammingPuzzlesAndCodeGolf
- **
- *----------
  **
  *~ zyx tsr XWVUTSR
    *}|{ wvu q Y     Q
@@ -45,17 +27,34 @@ import Snakify._
 
 class SnakifySpecs extends FlatSpec with Matchers {
 
-  "snakify" should "de-snakify single line" in {
-    /**
-      **
-      *Python
-      **
-      *
-      **
-      *----------      *
-      */
+  "desnakify" should "work with single line" in {
     val input: List[String] = "Python" :: Nil
     val expected = "Python"
+
+    val result: String = desnakify(input)
+    result should be(expected)
+  }
+
+  it should "work with multiple lines" in {
+    val input: List[String] =
+      "Hel         " ::
+      "  l      rin" ::
+      "  o,IAmASt g" ::
+      "           S" ::
+      "       !ekan" :: Nil
+    val expected = "Hello,IAmAStringSnake!"
+
+    val result: String = desnakify(input)
+    result should be(expected)
+  }
+
+  it should "work 2" in {
+    val input: List[String] =
+      "P  ngPu  Code " ::
+      "r  i  z  d  G " ::
+      "o  m  z  n  o " ::
+      "gram  lesA  lf" :: Nil
+    val expected = "ProgrammingPuzzlesAndCodeGolf"
 
     val result: String = desnakify(input)
     result should be(expected)
