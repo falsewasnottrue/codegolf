@@ -7,17 +7,17 @@ case class Gol(elems: List[List[Int]]) {
   val cols = elems.length
   val rows = elems.head.length
 
-  def get(col: Int, row: Int) = {
-    if (row < 0 || row >= rows || col < 0 || col > cols) {
-      0
-    } else {
-      elems(row)(col)
-    }
+  def get(col: Int, row: Int): Int = {
+    if (row < 0) get(col, rows + row)
+    else if (row >= rows) get(col, row - rows)
+    else if (col < 0) get(cols + col, row)
+    else if (col >= cols) get(col - cols, row)
+    else elems(row)(col)
   }
 
   def neighbours(col: Int, row: Int): Int =
     get(col-1, row-1) + get(col, row-1) + get(col+1, row-1) +
-    get(col-1, row) + get(col, row) + get(col+1, row) +
+    get(col-1, row) + get(col+1, row) +
     get(col-1, row+1) + get(col, row+1) + get(col+1, row+1)
 
   /**
@@ -29,17 +29,18 @@ case class Gol(elems: List[List[Int]]) {
   def next: Gol = {
     val withPos = elems.zipWithIndex.map {
       case (line, row) => line.zipWithIndex.map {
-        case (elem, col) => (elem, (row, col))
+        case (elem, col) => (elem, (col, row))
       }
     }
     println(withPos)
 
     val withNeighbors = withPos.map(_.map {
-      case (elem, (row, col)) => (elem, neighbours(col, row))
+      case (elem, (col, row)) => (elem, neighbours(col, row))
     })
     println(withNeighbors)
 
-    val next = withNeighbors.map(_.map {
+
+        val next = withNeighbors.map(_.map {
       case (elem, neighbours) => (elem, neighbours) match {
         case (0, 3) => 1
         case (0, _) => 0

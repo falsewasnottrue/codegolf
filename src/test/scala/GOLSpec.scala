@@ -65,13 +65,14 @@ class GolSpec extends FlatSpec with Matchers {
   }
 
   it should "compute neighbour count" in {
-    gol1.neighbours(0,0) shouldBe 0
+    gol1.neighbours(0,0) shouldBe 1
     gol1.neighbours(1,1) shouldBe 2
   }
 
   it should "compute a single step" in {
     val gol2 = gol1.next
 
+    println(gol2)
     val expected = Gol(List(
       List(0,0,0,0),
       List(1,0,0,1),
