@@ -45,4 +45,6 @@ case class Gol(elems: List[List[Int]]) {
     }))
 
   def stable: Boolean = next == this
+
+  def chain: Stream[Gol] = this #:: next.chain
 }

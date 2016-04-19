@@ -2,32 +2,6 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class GolSpec extends FlatSpec with Matchers {
 
-  /**
-    * [[0,0,0,0],
- [0,0,0,1],
- [0,1,1,1],
- [0,0,1,0]]
-
-[[0,0,0,0],
- [1,0,0,1],
- [1,1,0,1],
- [0,1,1,1]]
-
-[[0,1,0,0],
- [0,1,1,1],
- [0,0,0,0],
- [0,1,0,1]]
-
-[[0,1,0,1],
- [1,1,1,0],
- [0,1,0,1],
- [1,0,1,0]]
-
-[[0,0,0,0],
- [0,0,0,0],
- [0,0,0,0],
- [0,0,0,0]]
-    */
   val gol1 = Gol(List(
     List(0,0,0,0),
     List(0,0,0,1),
@@ -91,5 +65,35 @@ class GolSpec extends FlatSpec with Matchers {
       List(0,0,0),
       List(0,0,0)
     )).stable shouldBe true
+  }
+
+  it should "create chain of next states" in {
+    val exp = List(
+      gol1,
+      Gol(List(
+        List(0,0,0,0),
+        List(1,0,0,1),
+        List(1,1,0,1),
+        List(0,1,1,1))),
+      Gol(List(
+        List(0,1,0,0),
+        List(0,1,1,1),
+        List(0,0,0,0),
+        List(0,1,0,1))),
+      Gol(List(
+        List(0,1,0,1),
+        List(1,1,1,0),
+        List(0,1,0,1),
+        List(1,0,1,0))),
+      Gol(List(
+        List(0,0,0,0),
+        List(0,0,0,0),
+        List(0,0,0,0),
+        List(0,0,0,0)))
+    )
+
+    val res = gol1.chain.take(5).toList
+
+    res shouldBe exp
   }
 }
