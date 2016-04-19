@@ -26,21 +26,14 @@ case class Gol(elems: List[List[Int]]) {
     * If a cell that is on is next to 2 or 3 on squares, it stays on.
     * Otherwise, it is turned off.
     */
-  def next: Gol = {
-    val withPos = elems.zipWithIndex.map {
+  def next = Gol(
+    elems.zipWithIndex.map {
       case (line, row) => line.zipWithIndex.map {
         case (elem, col) => (elem, (col, row))
       }
-    }
-    println(withPos)
-
-    val withNeighbors = withPos.map(_.map {
+    }.map(_.map {
       case (elem, (col, row)) => (elem, neighbours(col, row))
-    })
-    println(withNeighbors)
-
-
-        val next = withNeighbors.map(_.map {
+    }).map(_.map {
       case (elem, neighbours) => (elem, neighbours) match {
         case (0, 3) => 1
         case (0, _) => 0
@@ -49,8 +42,7 @@ case class Gol(elems: List[List[Int]]) {
         case (1, _) => 0
         case _ => throw new IllegalStateException()
       }
-    })
+    }))
 
-    Gol(next)
-  }
+  def stable: Boolean = next == this
 }

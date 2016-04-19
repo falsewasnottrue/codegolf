@@ -82,4 +82,14 @@ class GolSpec extends FlatSpec with Matchers {
 
     gol2.equals(expected) shouldBe true
   }
+
+  it should "detect a stable state" in {
+    gol1.stable shouldBe false
+
+    Gol(List(
+      List(0,0,0),
+      List(0,0,0),
+      List(0,0,0)
+    )).stable shouldBe true
+  }
 }
